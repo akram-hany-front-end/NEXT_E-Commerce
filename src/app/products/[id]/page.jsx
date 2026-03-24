@@ -5,16 +5,11 @@ import { useParams } from "next/navigation";
 import Rating from "@/components/Rating";
 
 const SingleProduct = () => {
-  const { id } = useParams(); // 👈 هنا بناخد id من الرابط
+  const { id } = useParams(); //   هنا بناخد id من الرابط
   const [liked, setLiked] = useState([]); 
   const [mainImage, setMainImage] = useState("");
   const [product, setProduct] = useState(null);
-  useEffect(() => {
-    if (!id) return;
-    fetch(`https://dummyjson.com/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => setProduct(data));
-  }, [id]);
+ 
   
 useEffect(() => {
   const saved = localStorage.getItem("favorites");
@@ -29,7 +24,7 @@ useEffect(() => {
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
-        setMainImage(data.thumbnail); // 👈 دي المهمة
+        setMainImage(data.thumbnail); //   دي المهمة
       });
   }, [id]);
 
@@ -81,8 +76,11 @@ useEffect(() => {
             ))}
           </div>
 
-          <img className="main-img" src={mainImage} alt="uih" />
-        </div>
+<img
+  className="main-img"
+  src={mainImage || product.thumbnail}
+  alt="image"
+/>        </div>
 
         <div className="single-product-info-container">
           <h2>{product.title}</h2>
