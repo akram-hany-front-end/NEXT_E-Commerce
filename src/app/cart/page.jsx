@@ -1,8 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { faBorderAll } from "@fortawesome/free-solid-svg-icons";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -11,34 +8,61 @@ const Cart = () => {
     const items = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(items);
   }, []);
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
 
-  const subtotal = cart.reduce((acc, item) => acc + item.price, 0);
+const removeItem = (id) => {
+  const updated = cart.filter((item) => item.id !== id);
+  setCart(updated);
+  localStorage.setItem("cart", JSON.stringify(updated));
+};
+const shipping = subtotal > 0 ? 30 : 0;
+  const tax = subtotal * 0.02;
+  const total = subtotal + shipping + tax;
+  const updateQuantity = (id, type) => {
+    const updatedCart = cart.map((item) => {
+      if (item.id === id) {
+        if (type === "inc") {
+          return { ...item, quantity: item.quantity + 1 };
+        } else if (type === "dec" && item.quantity > 1) {
+          return { ...item, quantity: item.quantity - 1 };
+        }
+      }
+      return item;
+    });
+
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
   return (
     <div className="cart-page">
-      <Header />
-
       <div className="cart-container">
         <div className="shopping-cart">
           <h2>Shopping Cart</h2>
 
-          {cart.map((item, index) => (
-            <div key={index} className="item-in-cart">
+          {cart.map((item) => (
+            <div key={item.id} className="item-in-cart">
               <img className="pro-cart-img" src={item.thumbnail} alt="" />
-
               <div className="item-cart-details-cart">
                 <h4>{item.title}</h4>
                 <p className="pro-code">#{item.sku}</p>
               </div>
-
               <div className="item-counter-in-cart">
-                <span>-</span>
-                <span className="num">1</span>
-                <span>+</span>
+                <span onClick={() => updateQuantity(item.id, "dec")}>-</span>
+<span className="num">{item.quantity || 1}</span>                <span onClick={() => updateQuantity(item.id, "inc")}>+</span>
               </div>
-
-              <span className="item-price">${item.price}</span>
-
-              <img className="x" src="/img/Close.png" alt="" />
+              <span className="item-price">
+  ${(item.price * item.quantity).toFixed(2)}
+</span>
+              <img
+                className="x"
+                src="/img/Close.png"
+                alt="Remove"
+                onClick={() => removeItem(item.id)}
+              />{" "}
             </div>
           ))}
         </div>
@@ -51,25 +75,26 @@ const Cart = () => {
 
           <div className="subtotal space">
             <p>Subtotal</p>
-            <span>${subtotal}</span>
+            <span>${subtotal.toFixed(2)}</span>
           </div>
+
           <div className="estimated-tax space">
-            <p>Estimated Tax</p>
-            <span>$0</span>
+            <p>Estimated Tax (2%)</p>
+            <span>${tax.toFixed(2)}</span>
           </div>
+
           <div className="estimated-tax space">
-            <p>Estimated Shipping</p>
-            <span>$0</span>
+            <p>Shipping</p>
+            <span>${shipping}</span>
           </div>
+
           <div className="total space">
             <p>Total</p>
-            <span>$</span>
+            <span>${total.toFixed(2)}</span>
           </div>
           <button> Checkout </button>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

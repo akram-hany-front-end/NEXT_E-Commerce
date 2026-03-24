@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Banner = () => {
   return (
@@ -8,8 +9,9 @@ const Banner = () => {
            <span>Pro.Beyond.</span>
           <h1>IPhone 14 <span>Pro</span></h1>
           <p>Created to change everything for the better. For everyone</p>
-          <button>Shop Now</button> 
-        </div>
+<Link href="/products">
+  <button>Shop Now</button>
+</Link>          </div>
         <div className="iphone-img-container">
           
           <img src="/img/Iphone Image.png" alt="" />
@@ -65,8 +67,9 @@ Vision  <span>Pro</span></h3>
               The new 15‑inch MacBook Air makes room for more of what you love
               with a spacious Liquid Retina display.
             </p>
-            <button>Shop Now</button>
-          </div>
+<Link href="/products">
+  <button>Shop Now</button>
+</Link>            </div>
           <div className="mac-img">
             <img src="/img/MacBook Pro 14.png" alt="" />
           </div>

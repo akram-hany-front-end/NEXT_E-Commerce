@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
@@ -9,9 +10,10 @@ import Hero from "../components/Hero";
 import BigBanner from "../components/BigBanner";
 import Footer from "@/components/Footer";
 import Cart from "./cart/page";
-import Category from "./products/Category";
+import Category from "./products/page";
 import HomePage from "./HomePage";
 import SingleProduct from "./products/[id]/page";
+import Favourite from "./favorites/page";
 export default function Home() {
   return (
     <div>
@@ -21,7 +23,7 @@ export default function Home() {
 
 
 
-      <Category />
+      <HomePage />
 
 
 

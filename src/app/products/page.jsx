@@ -14,14 +14,27 @@ const [searchTerm, setSearchTerm] = useState("");
 const [selectedBrand, setSelectedBrand] = useState(""); // البراند المختار
 const [priceRange, setPriceRange] = useState([0, 2000]); // [minPrice, maxPrice]
 
+
+
+
   // state للمنتجات
           const [products, setProducts] = useState([]);
           // state للقلوب المفعلة
-          const [liked, setLiked] = useState([]);
-          // state loader
+const [liked, setLiked] = useState([]);          // state loader
         const [loading, setLoading] = useState(true);
+
+
+
+        useEffect(() => {
+  const saved = localStorage.getItem("favorites");
+  if (saved) {
+    setLiked(JSON.parse(saved));
+  }
+}, []);
           // جلب البيانات من Fake API
-      useEffect(() => {
+     
+     
+          useEffect(() => {
   const getPhones = async () => {
     try {
       const res = await fetch(
@@ -40,11 +53,19 @@ const [priceRange, setPriceRange] = useState([0, 2000]); // [minPrice, maxPrice]
 }, []);
 
           // دالة لتغيير لون القلب لكل كارد مستقل
-     const toggleLike = (id) => {
+const toggleLike = (id) => {
+  let updated;
+
   if (liked.includes(id)) {
-    setLiked(liked.filter((item) => item !== id));
+    updated = liked.filter((item) => item !== id);
   } else {
-    setLiked([...liked, id]);
+    updated = [...liked, id];
+  }
+
+  setLiked(updated);
+
+  if (typeof window !== "undefined") {
+    localStorage.setItem("favorites", JSON.stringify(updated));
   }
 };
 
@@ -73,7 +94,7 @@ const filteredProducts = products
 
   return (
     <div className="cat-page-container">
-      <Header />
+      
       <div className="category-container">
 
         <div className="filter">
@@ -170,7 +191,7 @@ const filteredProducts = products
 
 
       </div>
-      <Footer />
+    
     </div>
   );
 };

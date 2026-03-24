@@ -13,9 +13,9 @@ const Header = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/products", label: "Products" },
     { href: "/about", label: "About" },
     { href: "/contactus", label: "Contact Us" },
-    { href: "/blog", label: "Blog" },
   ];
 
   return (
@@ -43,7 +43,7 @@ const Header = () => {
       </div>
 
       <div className="header-icons">
-        <FontAwesomeIcon icon={faHeart} className="icon" />
+     <Link href="/favorites">   <FontAwesomeIcon icon={faHeart} className="icon" /></Link>
         <Link href="/cart"> <FontAwesomeIcon icon={faCartShopping} className="icon" /></Link>
        
         <FontAwesomeIcon icon={faUser} className="icon" />

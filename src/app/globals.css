@@ -924,10 +924,11 @@ body {
   width: 720px;
 }
 input[type="checkbox"] {
-  accent-color: #000000; /* أي لون تحبه */
+  accent-color: #000000;   
 }
 input[type="range"] {
-  accent-color: #000000; /* أي لون تحبه */
+  accent-color: #000000;  
+  
 }
 .checkbox-filter {
   display: flex;
@@ -976,7 +977,7 @@ input[type="range"] {
   gap: 40px;
   padding: 20px 160px;
 }
-.single-product-img-container {
+.single-product-img-container, .main-img {
   display: flex;
   flex-direction: row;
   width: 536px;

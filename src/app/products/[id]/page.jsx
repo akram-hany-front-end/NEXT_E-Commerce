@@ -2,48 +2,86 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Rating from "@/components/Rating";
 
 const SingleProduct = () => {
   const { id } = useParams(); // 👈 هنا بناخد id من الرابط
-
+  const [liked, setLiked] = useState([]); 
+  const [mainImage, setMainImage] = useState("");
   const [product, setProduct] = useState(null);
   useEffect(() => {
     if (!id) return;
-
     fetch(`https://dummyjson.com/products/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [id]);
+  
+useEffect(() => {
+  const saved = localStorage.getItem("favorites");
+  if (saved) {
+    setLiked(JSON.parse(saved));
+  }
+}, []);
 
-  const addToCart = () => {
+  useEffect(() => {
+    if (!id) return;
+    fetch(`https://dummyjson.com/products/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct(data);
+        setMainImage(data.thumbnail); // 👈 دي المهمة
+      });
+  }, [id]);
+
+ const addToCart = () => {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  cart.push(product);
+  const existing = cart.find((item) => item.id === product.id);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
   alert("Product added to cart");
 };
+  const toggleLike = (id) => {
+  let updated;
+
+  if (liked.includes(id)) {
+    updated = liked.filter((item) => item !== id);
+  } else {
+    updated = [...liked, id];
+  }
+
+  setLiked(updated);
+  localStorage.setItem("favorites", JSON.stringify(updated));
+};
+
 
   if (!product) return <p>Loading...</p>;
 
+
   return (
     <div className="single-product-page-container">
-      <Header />
-
       <div className="single-product-container">
         <div className="single-product-img-container">
           <div className="small-image-container">
             {product.images.map((img, index) => (
-              <img key={index} src={img} alt="product image" />
+              <img
+                key={index}
+                src={img}
+                alt="product image"
+                onClick={() => setMainImage(img)}
+                style={{ cursor: "pointer" }}
+              />
             ))}
           </div>
 
-          <img className="main-img" src={product.thumbnail} alt="" />
+          <img className="main-img" src={mainImage} alt="uih" />
         </div>
 
         <div className="single-product-info-container">
@@ -57,7 +95,13 @@ const SingleProduct = () => {
           <p className="discription-p">{product.description}</p>
 
           <div className="buttons-container">
-            <button className="fav">Add to Favorite</button>
+<button
+  className="fav"
+  onClick={() => toggleLike(product.id)}
+>
+  {liked.includes(product.id) ? "Remove ❤️" : "Add to ❤️"}
+</button>
+
             <button className="add" onClick={addToCart}>
               Add to Cart
             </button>
@@ -82,8 +126,6 @@ const SingleProduct = () => {
           </div>
         ))}
       </div>
-
-      <Footer />
     </div>
   );
 };
