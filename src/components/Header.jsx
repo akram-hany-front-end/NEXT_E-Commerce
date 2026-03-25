@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const pathname = usePathname(); // المسار الحالي
@@ -46,7 +47,7 @@ const Header = () => {
      <Link href="/favorites">   <FontAwesomeIcon icon={faHeart} className="icon" /></Link>
         <Link href="/cart"> <FontAwesomeIcon icon={faCartShopping} className="icon" /></Link>
        
-        <FontAwesomeIcon icon={faUser} className="icon" />
+        <UserButton></UserButton>
       </div>
 
     </div>
