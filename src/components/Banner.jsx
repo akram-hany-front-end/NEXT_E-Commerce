@@ -80,3 +80,4 @@ Vision  <span>Pro</span></h3>
 };
 
 export default Banner;
+  
