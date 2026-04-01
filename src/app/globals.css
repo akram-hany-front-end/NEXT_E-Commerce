@@ -8,6 +8,11 @@ body {
   font-family: "Inter", sans-serif;
   width: 1440px;
   margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 a {
   text-decoration: none;
