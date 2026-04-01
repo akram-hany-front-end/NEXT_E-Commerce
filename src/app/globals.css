@@ -9,6 +9,10 @@ body {
   width: 1440px;
   margin: 0 auto;
 }
+a{
+  text-decoration: none;
+  color: #000000;
+}
 /* Header */
 
 .header-container {
@@ -55,6 +59,11 @@ body {
 
   color: #000;
   cursor: pointer;
+}
+.header-icons a{
+text-decoration: none;
+  color: #000000;
+
 }
 .header-icons svg:hover {
   color: #555;

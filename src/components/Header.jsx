@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { UserButton } from "@clerk/nextjs";
+import { useUser, UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const pathname = usePathname(); // المسار الحالي
-
+const { isSignedIn } = useUser();
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
@@ -46,8 +46,14 @@ const Header = () => {
       <div className="header-icons">
      <Link href="/favorites">   <FontAwesomeIcon icon={faHeart} className="icon" /></Link>
         <Link href="/cart"> <FontAwesomeIcon icon={faCartShopping} className="icon" /></Link>
-       
-        <UserButton></UserButton>
+        
+  {isSignedIn ? (
+    <UserButton />
+  ) : (
+    <Link href="/sign-in">
+      <FontAwesomeIcon icon={faUser} className="icon" />
+    </Link>
+  )}
       </div>
 
     </div>
