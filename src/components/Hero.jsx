@@ -116,12 +116,7 @@ const Hero = () => {
         <div className="product-card-container">
           {products.map((product) => (
          <Link href={`/products/${product.id}`} className="single-product-card" key={product.id}>
-  <img src={product.thumbnail} alt={product.title} />
-
-  <p>{product.title}</p>
-  <span>${product.price}</span>
-
-  <FontAwesomeIcon
+            <FontAwesomeIcon
     className="i"
     icon={faHeart}
     onClick={(e) => {
@@ -134,6 +129,12 @@ const Hero = () => {
       cursor: "pointer",
     }}
   />
+  <img src={product.thumbnail} alt={product.title} />
+
+  <p>{product.title}</p>
+  <span>${product.price}</span>
+
+
 
   <button>Buy Now</button>
 </Link>
