@@ -16,7 +16,7 @@ const { isSignedIn } = useUser();
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
     { href: "/about", label: "About" },
-    { href: "/contactus", label: "Contact Us" },
+    { href: "/contact", label: "Contact Us" },
   ];
 
   return (
