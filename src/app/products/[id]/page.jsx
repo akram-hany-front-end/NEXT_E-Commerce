@@ -107,8 +107,9 @@ useEffect(() => {
         </div>
       </div>
 
+        <h1 className="void">Reviews</h1>
+
       <div className="reviews-container">
-        <h1>Reviews</h1>
 
         {product.reviews.map((review, index) => (
           <div key={index} className="single-review-card">
